@@ -23,6 +23,13 @@
 # production
 /build
 
+# python
+.venv/
+__pycache__/
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+
 # misc
 .DS_Store
 .idea/

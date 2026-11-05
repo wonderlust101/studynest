@@ -1,5 +1,5 @@
-# Local development only. The password is a throwaway value, and both ports are
-# bound to 127.0.0.1 so nothing outside this machine can reach them.
+# Local development only. The password is a throwaway value, and the port is
+# bound to 127.0.0.1 so nothing outside this machine can reach it.
 services:
   # Postgres with the pgvector extension available. Use the same major version
   # for your Neon project so local and production behave alike.
@@ -19,19 +19,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
-
-  # The Neon driver sends queries over HTTP rather than the Postgres protocol,
-  # so plain Postgres can't answer it. This proxy translates between the two,
-  # which lets the app use the same driver locally and on Vercel.
-  neon-proxy:
-    image: ghcr.io/timowilhelm/local-neon-http-proxy:main
-    environment:
-      PG_CONNECTION_STRING: postgres://postgres:postgres@postgres:5432/main
-    ports:
-      - "127.0.0.1:4444:4444"
-    depends_on:
-      postgres:
-        condition: service_healthy
 
 volumes:
   postgres_data:
